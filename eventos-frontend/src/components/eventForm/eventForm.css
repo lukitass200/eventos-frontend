@@ -1,0 +1,11 @@
+.eventForm {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    gap: 10px;
+    margin: auto;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 6px;
+  }
+  

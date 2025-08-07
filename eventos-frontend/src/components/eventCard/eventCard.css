@@ -1,0 +1,9 @@
+.eventCard {
+    border: 1px solid #ccc;
+    padding: 16px;
+    border-radius: 6px;
+    margin: 10px;
+    width: 250px;
+    background: white;
+  }
+  

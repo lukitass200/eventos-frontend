@@ -1,0 +1,19 @@
+.navbar {
+    display: flex;
+    gap: 20px;
+    background-color: #222;
+    padding: 10px;
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .navbar button {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
