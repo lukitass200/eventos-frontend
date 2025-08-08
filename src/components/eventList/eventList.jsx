@@ -11,7 +11,6 @@ export default function EventList() {
   useEffect(() => {
     apiFetch('/event')
       .then(data => {
-        console.log('RESPUESTA COMPLETA DE /event:', data);
         setEvents(Array.isArray(data) ? data : []);
         setLoading(false);
       })
@@ -35,5 +34,5 @@ export default function EventList() {
         <p>No hay eventos disponibles</p>
       )}
     </div>
-  );
+ );
 }

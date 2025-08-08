@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 export default function Navbar() {
+  const isLoggedIn = !!localStorage.getItem('token');
+
   const logout = () => {
     localStorage.removeItem('token');
     window.location.reload();
@@ -9,10 +11,26 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <Link to="/">Inicio</Link>
-      <Link to="/event/new">Nuevo Evento</Link>
-      <Link to="/event-location/new">Nueva Ubicación</Link>
-      <button onClick={logout}>Cerrar sesión</button>
+      <div className="nav-left">
+        <Link to="/">Inicio</Link>
+        {isLoggedIn && (
+          <>
+            <Link to="/event/new">Nuevo Evento</Link>
+            <Link to="/event-location/new">Nueva Ubicación</Link>
+          </>
+        )}
+      </div>
+
+      <div className="nav-right">
+        {isLoggedIn ? (
+          <button onClick={logout}>Cerrar sesión</button>
+        ) : (
+          <>
+            <Link to="/login">Iniciar Sesión</Link>
+            <Link to="/register">Registrarse</Link>
+          </>
+        )}
+      </div>
     </nav>
   );
 }

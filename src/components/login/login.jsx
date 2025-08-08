@@ -4,32 +4,57 @@ import './Login.css';
 export default function Login({ onLoginSuccess }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/user/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-    });
+    setLoading(true);
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/user/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (data.success) {
+      if (!response.ok) {
+        throw new Error(data.message || 'Error al iniciar sesión');
+      }
+
       localStorage.setItem('token', data.token);
       onLoginSuccess?.();
-    } else {
-      alert(data.message);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <form className="loginForm" onSubmit={handleLogin}>
       <h2>Iniciar sesión</h2>
-      <input type="text" placeholder="Usuario" value={username} onChange={e => setUsername(e.target.value)} />
-      <input type="password" placeholder="Contraseña" value={password} onChange={e => setPassword(e.target.value)} />
-      <button type="submit">Entrar</button>
+
+      <input
+        type="text"
+        placeholder="Usuario"
+        value={username}
+        onChange={e => setUsername(e.target.value)}
+        required
+      />
+
+      <input
+        type="password"
+        placeholder="Contraseña"
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+        required
+      />
+
+      <button type="submit" disabled={loading}>
+        {loading ? 'Ingresando...' : 'Entrar'}
+      </button>
     </form>
   );
 }

@@ -1,9 +1,35 @@
-.eventCard {
-    border: 1px solid #ccc;
-    padding: 16px;
-    border-radius: 6px;
-    margin: 10px;
-    width: 250px;
-    background: white;
-  }
-  
+.EventCard {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.EventCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.EventCard h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.EventCard p {
+  margin: 0.3rem 0;
+  color: #555;
+  font-size: 1rem;
+}
+
+.EventCard p:last-child {
+  margin-bottom: 0;
+}
+
+.EventCardLink {
+  text-decoration: none;
+  color: inherit;
+}

@@ -1,8 +1,69 @@
 .eventDetail {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-  }
-  
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  font-family: sans-serif;
+  color: #333;
+}
+
+.eventDetail h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+.description {
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  color: #555;
+}
+
+.infoGroup,
+.location,
+.tags,
+.creator {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-left: 4px solid #007bff;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+}
+
+.infoGroup p,
+.location p,
+.creator p {
+  margin: 0.3rem 0;
+}
+
+.tags ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tags li {
+  background-color: #007bff;
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+.error {
+  text-align: center;
+  color: #dc3545;
+  font-weight: bold;
+  padding: 2rem;
+}
+
+.loading {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  padding: 2rem;
+}

@@ -1,43 +1,74 @@
 import { useState } from 'react';
-import './Register.css';
+import './register.css'
 
 export default function Register() {
-  const [form, setForm] = useState({
-    first_name: '',
-    last_name: '',
-    username: '',
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
     password: '',
   });
 
+  const [message, setMessage] = useState('');
+
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage('');
 
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/user/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
-    });
+    try {
+      const res = await fetch('http://localhost:3000/api/user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
 
-    if (res.status === 201) {
-      alert('Registro exitoso. Ahora podés iniciar sesión.');
-    } else {
       const data = await res.json();
-      alert(data.message || 'Error al registrarse');
+
+      if (!res.ok) {
+        throw new Error(data.message || 'Error al registrarse');
+      }
+
+      setMessage('Registro exitoso 🎉');
+    } catch (err) {
+      setMessage(err.message);
     }
   };
 
   return (
-    <form className="registerForm" onSubmit={handleSubmit}>
+    <div className="Register">
       <h2>Registrarse</h2>
-      <input type="text" name="first_name" placeholder="Nombre" onChange={handleChange} />
-      <input type="text" name="last_name" placeholder="Apellido" onChange={handleChange} />
-      <input type="email" name="username" placeholder="Email" onChange={handleChange} />
-      <input type="password" name="password" placeholder="Contraseña" onChange={handleChange} />
-      <button type="submit">Registrarse</button>
-    </form>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Nombre"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Correo electrónico"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Contraseña"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Registrarse</button>
+      </form>
+      {message && <p>{message}</p>}
+    </div>
   );
 }
