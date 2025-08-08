@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { apiFetch } from '../../services/api';
-import './EventForm.css';
+import '../eventForm/eventForm.css';
 
 export default function EventForm({ onCreated }) {
   const [form, setForm] = useState({

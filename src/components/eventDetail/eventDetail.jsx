@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { apiFetch } from '../../services/api';
-import './EventDetail.css';
+import '../eventDetail/eventDetail.css';
 
 export default function EventDetail() {
   const { id } = useParams();
