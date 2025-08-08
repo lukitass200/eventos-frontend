@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { apiFetch } from '../../services/api';
 import EventCard from '../eventCard/eventCard';
-import './eventList.css';
+import '../eventList/eventList.css';
 
 export default function EventList() {
   const [events, setEvents] = useState([]);
