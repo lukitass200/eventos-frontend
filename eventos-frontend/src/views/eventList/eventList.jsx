@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { apiFetch } from '../../services/api';
-import EventCard from '../eventCard/eventCard';
+import EventCard from '../../components/eventCard/eventCard';
 import './EventList.css';
 
 export default function EventList() {

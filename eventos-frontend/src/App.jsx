@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './components/login/login.jsx';
-import Register from './components/register/register.jsx';
-import EventList from './components/eventList/eventList.jsx';
-import EventDetail from './components/eventDetail/eventDetail.jsx';
-import EventForm from './components/eventForm/eventForm.jsx';
-import ParticipantsList from './components/participantsList/participantsList.jsx';
-import EventLocationForm from './components/eventLocationForm/eventLocationForm.jsx';
+import Login from './views/login/login.jsx';
+import Register from './views/register/register.jsx';
+import EventList from './views/eventList/eventList.jsx';
+import EventDetail from './views/eventDetail/eventDetail.jsx';
+import EventForm from './views/eventForm/eventForm.jsx';
+import ParticipantsList from './views/participantsList/participantsList.jsx';
+import EventLocationForm from './views/eventLocationForm/eventLocationForm.jsx';
 import Navbar from './components/navbar/navbar.jsx';
 import ProtectedRoute from './components/protectedRoute/protectedRoute.jsx';
 
