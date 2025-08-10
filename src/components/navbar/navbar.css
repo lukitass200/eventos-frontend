@@ -38,3 +38,7 @@
 .navbar button:hover {
   text-decoration: underline;
 }
+
+.iconUser{
+  width: 2vw;
+}

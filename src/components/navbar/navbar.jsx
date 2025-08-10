@@ -28,6 +28,7 @@ export default function Navbar() {
           <>
             <Link to="/login">Iniciar Sesión</Link>
             <Link to="/register">Registrarse</Link>
+            <Link className = 'link1' to ="/profileView"><img src="src\assets\image.png" alt="" className='iconUser' /></Link>
           </>
         )}
       </div>
