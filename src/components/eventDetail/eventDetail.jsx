@@ -16,7 +16,7 @@ export default function EventDetail() {
         setError('No se pudo cargar el evento.');
       });
   }, [id]);
-
+  console.log(event)
   if (error) return <p className="error">{error}</p>;
   if (!event) return <p className="loading">Cargando evento...</p>;
 
@@ -38,8 +38,8 @@ export default function EventDetail() {
 
       <div className="location">
         <h3>Ubicación</h3>
-        <p><strong>Lugar:</strong> {event.event_location?.name}</p>
-        <p><strong>Dirección:</strong> {event.event_location?.full_address}</p>
+        <p><strong>Lugar:</strong> {event.eventLocation?.name}</p>
+        <p><strong>Dirección:</strong> {event.eventLocation?.full_address}</p>
         <p><strong>Localidad:</strong> {location?.name}</p>
         <p><strong>Provincia:</strong> {province?.name}</p>
       </div>
