@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import './cards_Perfil.css';
-import Card from '../../card/Card';
+import Card from '../../eventCard/eventCard';
 
-const PublicacionesUsuario = ({ idUsuario }) => {
-  const [publicaciones, setPublicaciones] = useState([]);
+const EventosUsuario = ({ idUsuario }) => {
+  const [eventos, setEventos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`http://localhost:9000/api/usuario/${idUsuario}/publicaciones`);
-        if (!res.ok) throw new Error('Error al obtener publicaciones');
+        const res = await fetch(`http://localhost:9000/api/usuario/${idUsuario}/eventos`);
+        if (!res.ok) throw new Error('Error al obtener eventos');
         const json = await res.json();
-        setPublicaciones(json);
+        setEventos(json);
       } catch (err) {
         setError(err.message);
-        setPublicaciones([]);
+        setEventos([]);
       } finally {
         setLoading(false);
       }
@@ -24,32 +24,31 @@ const PublicacionesUsuario = ({ idUsuario }) => {
 
     if (idUsuario) fetchData();
   }, [idUsuario]);
-  
-  if (loading) return <p>Cargando publicaciones...</p>;
+
+  if (loading) return <p>Cargando eventos...</p>;
   if (error) return <p>Error: {error}</p>;
 
- 
-return (
-  <div>
-    <h2 className='title'>Publicaciones del Usuario</h2>
-    {publicaciones.length === 0 ? (
-      <p className='noLibros'>No hay publicaciones.</p>
-    ) : (
-      <div className="publicaciones-grid">
-        {publicaciones.map((publi) => (
-          <Card
-            key={publi.id}
-            id={publi.id}
-            nombre_libro={publi.nombre_libro}
-            imagenes={publi.imagenes}
-            price={publi.precio}
-            id_usuario={publi.id_usuario}
-          />
-        ))}
-      </div>
-    )}
-  </div>
-);
-        }
+  return (
+    <div>
+      <h2 className='title'>Eventos del Usuario</h2>
+      {eventos.length === 0 ? (
+        <p className='noLibros'>No hay eventos.</p>
+      ) : (
+        <div className="publicaciones-grid">
+          {eventos.map((evento) => (
+            <Card
+              key={evento.id}
+              id={evento.id}
+              nombre_libro={evento.name} 
+              imagenes={evento.imagenes || []} 
+              price={evento.price}
+              id_usuario={evento.id_creator_user}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
-export default PublicacionesUsuario;
+export default EventosUsuario;

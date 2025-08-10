@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ProfileHeader from '../components/Usuario/profileHeader/profileHeader.jsx';
-import PublicacionesUsuario from '../components/usuario/cards_Perfil/cards_Perfil';
+import PublicacionesUsuario from '../components/Usuario/cardsPerfil/cards_Perfil.jsx';
      
 
 const ProfileView = () => {
