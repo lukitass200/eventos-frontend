@@ -17,6 +17,7 @@ export default function Navbar() {
           <>
             <Link to="/event/new">Nuevo Evento</Link>
             <Link to="/event-location/new">Nueva Ubicación</Link>
+            <Link className = 'link1' to ="/profileView"><img src="src\assets\image.png" alt="" className='iconUser' /></Link>
           </>
         )}
       </div>
