@@ -25,6 +25,7 @@ export default function Login({ onLoginSuccess }) {
       }
 
       localStorage.setItem('token', data.token);
+       window.location.reload();
       onLoginSuccess?.();
     } catch (error) {
       alert(error.message);

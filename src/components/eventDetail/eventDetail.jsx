@@ -16,7 +16,6 @@ export default function EventDetail() {
         setError('No se pudo cargar el evento.');
       });
   }, [id]);
-  console.log(event)
   if (error) return <p className="error">{error}</p>;
   if (!event) return <p className="loading">Cargando evento...</p>;
 
