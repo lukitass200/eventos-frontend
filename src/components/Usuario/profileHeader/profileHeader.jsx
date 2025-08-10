@@ -5,7 +5,7 @@ const ProfileHeader = () => {
   return (
     <div className="profile-header">
       <img
-        src="src\assets\serena.jpg" 
+        src="src\assets\image.png" 
         alt="Foto de perfil"
         className="profile-img"
       />
