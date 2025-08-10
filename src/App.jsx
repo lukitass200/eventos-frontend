@@ -8,6 +8,7 @@ import ParticipantsList from './components/participantsList/participantsList.jsx
 import EventLocationForm from './components/eventLocationForm/eventLocationForm.jsx';
 import Navbar from './components/navbar/navbar.jsx';
 import ProtectedRoute from './components/protectedRoute/protectedRoute.jsx';
+import ProfileView from './views/profileView.jsx';
 
 function App() {
   return (
@@ -35,6 +36,9 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/profileView" element={<ProfileView/>} />
+
       </Routes>
     </Router>
   );

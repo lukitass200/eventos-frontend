@@ -1,0 +1,50 @@
+.profile-header {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background-color: white;
+  }
+  
+  .profile-img {
+    width: 10vw;
+    height: 10vw;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 0.1vw;
+}
+  
+  .profile-info {
+    margin-left: 16px;
+  }
+  
+  .profile-name {
+    margin: 0;
+    font-size: 1.3vw;
+    font-weight: bold;
+  }
+  
+  .profile-username {
+    margin: 0.2vw 0 0.4vw 0;
+    font-size: 1vw;
+    color: #555;
+}
+  
+  .profile-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .edit-btn, .logout-btn {
+    padding: 0.4vw 0.6vw;
+    font-size: 1.2vw;
+    border-radius: 0.5vw;
+    border: none;
+    background-color: #f3e9ff;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+  
+  .edit-btn:hover,
+  .logout-btn:hover {
+    background-color: #d6bcff;
+  }
