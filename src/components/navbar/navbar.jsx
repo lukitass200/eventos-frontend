@@ -24,7 +24,7 @@ export default function Navbar() {
 
       <div className="nav-right">
         {isLoggedIn ? (
-          <button onClick={logout}>Cerrar sesión</button>
+          <><button onClick={logout}>Cerrar sesión</button><Link className='link1' to="/profileView"><img src="src\assets\image.png" alt="" className='iconUser' /></Link></>
         ) : (
           <>
             <Link to="/login">Iniciar Sesión</Link>
