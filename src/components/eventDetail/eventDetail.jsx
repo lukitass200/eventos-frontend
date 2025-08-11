@@ -37,12 +37,16 @@ export default function EventDetail() {
       .then(data => setIsEnrolled(data.enrolled))
       .catch(err => console.error('Error verificando inscripción:', err));
 
+
+    console.log("pasó por acá")
+
   }, [id]);
-  console.log(event)
+ // console.log(event)
   // Verificar si es dueño del evento
   useEffect(() => {
     if (event && currentUserId) {
-      setIsOwner(currentUserId == event.creator_user?.id); 
+      console.log(event.id_creator_user)
+      setIsOwner(currentUserId == event.id_creator_user); 
     }
   }, [event, currentUserId]);
 
