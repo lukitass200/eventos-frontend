@@ -13,12 +13,12 @@ export default function EventDetail() {
   const [isOwner, setIsOwner] = useState(false);
   const [currentUserId, setCurrentUserId] = useState(null);
 
+  // Obtener usuario y detalles evento al cargar o cambiar id
   useEffect(() => {
     // Obtener el usuario actual desde el token
     apiFetch(`/user/me`)
       .then(user => {
         setCurrentUserId(user.id);
-        console.log(user.id)
       })
       .catch(err => {
         console.error("Error obteniendo usuario logueado:", err);
@@ -31,22 +31,30 @@ export default function EventDetail() {
         console.error('Error al obtener evento:', err);
         setError('No se pudo cargar el evento.');
       });
-
-    // Verificar inscripción
-    apiFetch(`/event/${id}/enrollment`)
-      .then(data => setIsEnrolled(data.enrolled))
-      .catch(err => console.error('Error verificando inscripción:', err));
-
-
-    console.log("pasó por acá")
-
   }, [id]);
- // console.log(event)
-  // Verificar si es dueño del evento
+
+  // Verificar inscripción solo si hay usuario logueado y evento cargado
+  useEffect(() => {
+    if (!currentUserId) return; // Si no hay usuario, no verificamos
+    if (!id) return; // Si no hay id, no verificamos
+
+    apiFetch(`/event/${id}/enrollment`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      .then(data => {
+        setIsEnrolled(data.inscrito);
+      })
+      .catch(err => {
+        console.error('Error verificando inscripción:', err);
+      });
+  }, [currentUserId, id]);
+
+  // Verificar si el usuario es dueño del evento
   useEffect(() => {
     if (event && currentUserId) {
-      console.log(event.id_creator_user)
-      setIsOwner(currentUserId == event.id_creator_user); 
+      setIsOwner(currentUserId === event.id_creator_user);
     }
   }, [event, currentUserId]);
 
@@ -55,7 +63,7 @@ export default function EventDetail() {
 
   const handleEnroll = () => {
     setLoadingEnroll(true);
-    apiFetch(`/api/event/${id}/enrollment`, {
+    apiFetch(`/event/${id}/enrollment`, {
       method: 'POST',
       body: JSON.stringify({ description: '' })
     })
@@ -66,7 +74,7 @@ export default function EventDetail() {
 
   const handleUnenroll = () => {
     setLoadingEnroll(true);
-    apiFetch(`/api/event/${id}/enrollment`, {
+    apiFetch(`/event/${id}/enrollment`, {
       method: 'DELETE'
     })
       .then(() => setIsEnrolled(false))
@@ -119,7 +127,10 @@ export default function EventDetail() {
             {loadingEnroll ? 'Procesando...' : 'Darme de baja'}
           </button>
         ) : (
-          <button onClick={handleEnroll} disabled={loadingEnroll || !event.enabled_for_enrollment}>
+          <button
+            onClick={handleEnroll}
+            disabled={loadingEnroll || !event.enabled_for_enrollment}
+          >
             {loadingEnroll ? 'Procesando...' : 'Inscribirme'}
           </button>
         )}
