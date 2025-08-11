@@ -1,26 +1,57 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { apiFetch } from '../../services/api';
 import '../eventDetail/eventDetail.css';
 
 export default function EventDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [event, setEvent] = useState(null);
   const [error, setError] = useState(null);
+  const [isEnrolled, setIsEnrolled] = useState(false);
+  const [loadingEnroll, setLoadingEnroll] = useState(false);
+
+  const currentUser = JSON.parse(localStorage.getItem('user')); 
 
   useEffect(() => {
+    // Traer detalle evento
     apiFetch(`/event/${id}`)
       .then(data => setEvent(data))
       .catch(err => {
         console.error('Error al obtener evento:', err);
         setError('No se pudo cargar el evento.');
       });
+
+      apiFetch(`/event/${id}/enrollment`)
+      .then(data => setIsEnrolled(data.enrolled))
+      .catch(err => console.error('Error verificando inscripción:', err));
   }, [id]);
+
   if (error) return <p className="error">{error}</p>;
   if (!event) return <p className="loading">Cargando evento...</p>;
 
-  const location = event.event_location?.location;
-  const province = location?.province;
+  const isOwner = currentUser?.id === event.creator_user?.id;
+
+  const handleEnroll = () => {
+    setLoadingEnroll(true);
+    apiFetch(`/api/event/${id}/enrollment`, {
+      method: 'POST',
+      body: JSON.stringify({ description: '' })
+    })
+      .then(() => setIsEnrolled(true))
+      .catch(err => console.error(err))
+      .finally(() => setLoadingEnroll(false));
+  };
+
+  const handleUnenroll = () => {
+    setLoadingEnroll(true);
+    apiFetch(`/api/event/${id}/enrollment`, {
+      method: 'DELETE'
+    })
+      .then(() => setIsEnrolled(false))
+      .catch(err => console.error(err))
+      .finally(() => setLoadingEnroll(false));
+  };
 
   return (
     <div className="eventDetail">
@@ -38,9 +69,6 @@ export default function EventDetail() {
       <div className="location">
         <h3>Ubicación</h3>
         <p><strong>Lugar:</strong> {event.eventLocation?.name}</p>
-        <p><strong>Dirección:</strong> {event.eventLocation?.full_address}</p>
-        <p><strong>Localidad:</strong> {location?.name}</p>
-        <p><strong>Provincia:</strong> {province?.name}</p>
       </div>
 
       <div className="tags">
@@ -60,6 +88,20 @@ export default function EventDetail() {
         <h3>Organizado por</h3>
         <p>{event.creator_user?.first_name} {event.creator_user?.last_name}</p>
         <p>{event.creator_user?.username}</p>
+      </div>
+
+      <div className="actions">
+        {isOwner ? (
+          <button onClick={() => navigate(`/editEventForm/${id}`)}>Editar evento</button>
+        ) : isEnrolled ? (
+          <button onClick={handleUnenroll} disabled={loadingEnroll}>
+            {loadingEnroll ? 'Procesando...' : 'Darme de baja'}
+          </button>
+        ) : (
+          <button onClick={handleEnroll} disabled={loadingEnroll || !event.enabled_for_enrollment}>
+            {loadingEnroll ? 'Procesando...' : 'Inscribirme'}
+          </button>
+        )}
       </div>
     </div>
   );

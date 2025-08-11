@@ -9,6 +9,7 @@ import EventLocationForm from './components/eventLocationForm/eventLocationForm.
 import Navbar from './components/navbar/navbar.jsx';
 import ProtectedRoute from './components/protectedRoute/protectedRoute.jsx';
 import ProfileView from './views/profileView.jsx';
+import EditEventForm from './components/EditEventForm/EditEventForm.jsx';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/eventDetail/:id" element={<EventDetail />} />
+        <Route path="/editEventForm/:id" element={<EditEventForm/>} />
         <Route path="/event/:id/participants" element={<ParticipantsList />} />
         <Route
           path="/event/new"
