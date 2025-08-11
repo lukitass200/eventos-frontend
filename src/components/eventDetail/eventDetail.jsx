@@ -10,13 +10,21 @@ export default function EventDetail() {
   const [error, setError] = useState(null);
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [loadingEnroll, setLoadingEnroll] = useState(false);
-  const [isOwner, setIsOwner] = useState("");
+  const [isOwner, setIsOwner] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState(null);
 
-  const currentUser = JSON.parse(localStorage.getItem('user')); 
- console.log(currentUser)
-  console.log(event)
   useEffect(() => {
-    // Traer detalle evento
+    // Obtener el usuario actual desde el token
+    apiFetch(`/user/me`)
+      .then(user => {
+        setCurrentUserId(user.id);
+        console.log(user.id)
+      })
+      .catch(err => {
+        console.error("Error obteniendo usuario logueado:", err);
+      });
+
+    // Traer detalle del evento
     apiFetch(`/event/${id}`)
       .then(data => setEvent(data))
       .catch(err => {
@@ -24,17 +32,23 @@ export default function EventDetail() {
         setError('No se pudo cargar el evento.');
       });
 
-      apiFetch(`/event/${id}/enrollment`)
+    // Verificar inscripción
+    apiFetch(`/event/${id}/enrollment`)
       .then(data => setIsEnrolled(data.enrolled))
-      // .then(setIsOwner(currentUser.id === event.creator_user.id))
       .catch(err => console.error('Error verificando inscripción:', err));
+
   }, [id]);
+  console.log(event)
+  // Verificar si es dueño del evento
+  useEffect(() => {
+    if (event && currentUserId) {
+      setIsOwner(currentUserId == event.creator_user?.id); 
+    }
+  }, [event, currentUserId]);
 
   if (error) return <p className="error">{error}</p>;
   if (!event) return <p className="loading">Cargando evento...</p>;
-  // console.log(currentUser.id + " <- usuario actual | usuario creador -> "+ event.creator_user.id)
 
-  // console.log(isOwner)
   const handleEnroll = () => {
     setLoadingEnroll(true);
     apiFetch(`/api/event/${id}/enrollment`, {
