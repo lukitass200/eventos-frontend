@@ -10,9 +10,11 @@ export default function EventDetail() {
   const [error, setError] = useState(null);
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [loadingEnroll, setLoadingEnroll] = useState(false);
+  const [isOwner, setIsOwner] = useState("");
 
   const currentUser = JSON.parse(localStorage.getItem('user')); 
-
+ console.log(currentUser)
+  console.log(event)
   useEffect(() => {
     // Traer detalle evento
     apiFetch(`/event/${id}`)
@@ -24,14 +26,15 @@ export default function EventDetail() {
 
       apiFetch(`/event/${id}/enrollment`)
       .then(data => setIsEnrolled(data.enrolled))
+      // .then(setIsOwner(currentUser.id === event.creator_user.id))
       .catch(err => console.error('Error verificando inscripción:', err));
   }, [id]);
 
   if (error) return <p className="error">{error}</p>;
   if (!event) return <p className="loading">Cargando evento...</p>;
+  // console.log(currentUser.id + " <- usuario actual | usuario creador -> "+ event.creator_user.id)
 
-  const isOwner = currentUser?.id === event.creator_user?.id;
-
+  // console.log(isOwner)
   const handleEnroll = () => {
     setLoadingEnroll(true);
     apiFetch(`/api/event/${id}/enrollment`, {
