@@ -9,7 +9,6 @@ export default function EventList() {
   const [error, setError] = useState(null);
   const [offSet, setOffSet] = useState(1); // Estado para el offset
   const limit = 10; // Número de eventos por página
-
   useEffect(() => {
     setLoading(true);
     apiFetch(`/event/?limit=${limit}&offset=${offSet}`)

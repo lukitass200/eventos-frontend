@@ -18,6 +18,7 @@ export default function EditEventForm({ onUpdated }) {
     price: "",
     enabledForEnrollment: false,
     maxAssistance: "",
+    idCreatorUser: "",
   });
 
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,6 @@ export default function EditEventForm({ onUpdated }) {
     setLoading(true);
     apiFetch(`/event/${id}`)
       .then((data) => {
-        // Aquí podés formatear startDate si hace falta (para datetime-local)
         const formattedStartDate = data.start_date
           ? new Date(data.start_date).toISOString().slice(0, 16)
           : "";
@@ -44,10 +44,11 @@ export default function EditEventForm({ onUpdated }) {
           price: data.price || "",
           enabledForEnrollment: data.enabled_for_enrollment || false,
           maxAssistance: data.max_assistance || "",
+          idCreatorUser: data.id_creator_user || "",
         });
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setError("No se pudo cargar el evento.");
         setLoading(false);
       });
@@ -68,14 +69,14 @@ export default function EditEventForm({ onUpdated }) {
     setSuccess(false);
 
     try {
-      const updated = await apiFetch("/api/event", {
+      const updated = await apiFetch("/event", {
         method: "PUT",
         body: JSON.stringify(formData),
       });
 
       setSuccess(true);
       if (onUpdated) onUpdated(updated);
-      else navigate(`/event/${updated.id}`); // redirigir a detalle después de actualizar
+      else navigate(`/event/${updated.id}`);
     } catch (err) {
       setError(err.message || "Error al actualizar el evento");
     } finally {
@@ -88,128 +89,126 @@ export default function EditEventForm({ onUpdated }) {
 
   return (
     <div className="total">
-         <form onSubmit={handleSubmit} className="edit-event-form__container" style={{ maxWidth: "600px", margin: "0 auto" }}>
-  <h2 className="edit-event-form__title">Editar Evento</h2>
+      <form onSubmit={handleSubmit} className="edit-event-form__container" style={{ maxWidth: "600px", margin: "0 auto" }}>
+        <h2 className="edit-event-form__title">Editar Evento</h2>
 
-  {error && <p className="edit-event-form__error">{error}</p>}
-  {success && <p className="edit-event-form__success">Evento actualizado correctamente</p>}
+        {error && <p className="edit-event-form__error">{error}</p>}
+        {success && <p className="edit-event-form__success">Evento actualizado correctamente</p>}
 
-  <label className="edit-event-form__label">
-    Nombre:
-    <input
-      className="edit-event-form__input"
-      type="text"
-      name="name"
-      value={formData.name}
-      onChange={handleChange}
-      required
-    />
-  </label>
+        <label className="edit-event-form__label">
+          Nombre:
+          <input
+            className="edit-event-form__input"
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </label>
 
-  <label className="edit-event-form__label">
-    Descripción:
-    <textarea
-      className="edit-event-form__textarea"
-      name="description"
-      value={formData.description}
-      onChange={handleChange}
-      required
-    />
-  </label>
+        <label className="edit-event-form__label">
+          Descripción:
+          <textarea
+            className="edit-event-form__textarea"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+          />
+        </label>
 
-  <label className="edit-event-form__label">
-    Categoría (ID):
-    <input
-      className="edit-event-form__input"
-      type="number"
-      name="idEventCategory"
-      value={formData.idEventCategory}
-      onChange={handleChange}
-      required
-    />
-  </label>
+        <label className="edit-event-form__label">
+          Categoría (ID):
+          <input
+            className="edit-event-form__input"
+            type="number"
+            name="idEventCategory"
+            value={formData.idEventCategory}
+            onChange={handleChange}
+            required
+          />
+        </label>
 
-  <label className="edit-event-form__label">
-    Ubicación (ID):
-    <input
-      className="edit-event-form__input"
-      type="number"
-      name="idEventLocation"
-      value={formData.idEventLocation}
-      onChange={handleChange}
-      required
-    />
-  </label>
+        <label className="edit-event-form__label">
+          Ubicación (ID):
+          <input
+            className="edit-event-form__input"
+            type="number"
+            name="idEventLocation"
+            value={formData.idEventLocation}
+            onChange={handleChange}
+            required
+          />
+        </label>
 
-  <label className="edit-event-form__label">
-    Fecha de inicio:
-    <input
-      className="edit-event-form__input"
-      type="datetime-local"
-      name="startDate"
-      value={formData.startDate}
-      onChange={handleChange}
-      required
-    />
-  </label>
+        <label className="edit-event-form__label">
+          Fecha de inicio:
+          <input
+            className="edit-event-form__input"
+            type="datetime-local"
+            name="startDate"
+            value={formData.startDate}
+            onChange={handleChange}
+            required
+          />
+        </label>
 
-  <label className="edit-event-form__label">
-    Duración (minutos):
-    <input
-      className="edit-event-form__input"
-      type="number"
-      name="durationInMinutes"
-      value={formData.durationInMinutes}
-      onChange={handleChange}
-      required
-    />
-  </label>
+        <label className="edit-event-form__label">
+          Duración (minutos):
+          <input
+            className="edit-event-form__input"
+            type="number"
+            name="durationInMinutes"
+            value={formData.durationInMinutes}
+            onChange={handleChange}
+            required
+          />
+        </label>
 
-  <label className="edit-event-form__label">
-    Precio:
-    <input
-      className="edit-event-form__input"
-      type="number"
-      name="price"
-      value={formData.price}
-      onChange={handleChange}
-      required
-    />
-  </label>
+        <label className="edit-event-form__label">
+          Precio:
+          <input
+            className="edit-event-form__input"
+            type="number"
+            name="price"
+            value={formData.price}
+            onChange={handleChange}
+            required
+          />
+        </label>
 
-  <label className="edit-event-form__checkbox-label">
-    Habilitado para inscripción:
-    <input
-      className="edit-event-form__checkbox"
-      type="checkbox"
-      name="enabledForEnrollment"
-      checked={formData.enabledForEnrollment}
-      onChange={handleChange}
-    />
-  </label>
+        <label className="edit-event-form__checkbox-label">
+          Habilitado para inscripción:
+          <input
+            className="edit-event-form__checkbox"
+            type="checkbox"
+            name="enabledForEnrollment"
+            checked={formData.enabledForEnrollment}
+            onChange={handleChange}
+          />
+        </label>
 
-  <label className="edit-event-form__label">
-    Máxima asistencia:
-    <input
-      className="edit-event-form__input"
-      type="number"
-      name="maxAssistance"
-      value={formData.maxAssistance}
-      onChange={handleChange}
-      required
-    />
-  </label>
+        <label className="edit-event-form__label">
+          Máxima asistencia:
+          <input
+            className="edit-event-form__input"
+            type="number"
+            name="maxAssistance"
+            value={formData.maxAssistance}
+            onChange={handleChange}
+            required
+          />
+        </label>
 
-  <button
-    className="edit-event-form__button"
-    type="submit"
-    disabled={loading}
-  >
-    {loading ? "Actualizando..." : "Guardar cambios"}
-  </button>
-</form>
+        <button
+          className="edit-event-form__button"
+          type="submit"
+          disabled={loading}
+        >
+          {loading ? "Actualizando..." : "Guardar cambios"}
+        </button>
+      </form>
     </div>
-   
-
   );
 }

@@ -26,7 +26,7 @@ export default function EventDetail() {
 
     // Traer detalle del evento
     apiFetch(`/event/${id}`)
-      .then(data => setEvent(data))
+      .then(data => setEvent(data)) 
       .catch(err => {
         console.error('Error al obtener evento:', err);
         setError('No se pudo cargar el evento.');
