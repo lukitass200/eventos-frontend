@@ -19,12 +19,12 @@ export default function Login({ onLoginSuccess }) {
       });
 
       const data = await response.json();
-
+      
       if (!response.ok) {
         throw new Error(data.message || 'Error al iniciar sesión');
       }
 
-      localStorage.setItem('token', data.token);
+      localStorage.setItem('token', data.token); 
        window.location.reload();
       onLoginSuccess?.();
     } catch (error) {
@@ -32,6 +32,7 @@ export default function Login({ onLoginSuccess }) {
     } finally {
       setLoading(false);
     }
+    
   };
 
   return (

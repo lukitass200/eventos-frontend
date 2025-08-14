@@ -69,10 +69,13 @@ export default function EditEventForm({ onUpdated }) {
     setSuccess(false);
 
     try {
+      console.log(formData)
       const updated = await apiFetch("/event", {
         method: "PUT",
         body: JSON.stringify(formData),
       });
+      console.log(updated)
+     
 
       setSuccess(true);
       if (onUpdated) onUpdated(updated);
