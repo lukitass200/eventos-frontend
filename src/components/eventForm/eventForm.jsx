@@ -12,7 +12,7 @@ export default function EventForm({ onCreated }) {
     enabled_for_enrollment: true,
     max_assistance: 100,
     id_event_location: '',
-  });
+  }); 
 
   const handleChange = e => {
     const { name, value, type } = e.target;
@@ -36,14 +36,52 @@ export default function EventForm({ onCreated }) {
 
   return (
     <form className="eventForm" onSubmit={handleSubmit}>
-      <input name="name" placeholder="Nombre" onChange={handleChange} />
-      <textarea name="description" placeholder="Descripción" onChange={handleChange} />
-      <input type="datetime-local" name="start_date" onChange={handleChange} />
-      <input type="number" name="duration_in_minutes" placeholder="Duración" onChange={handleChange} />
-      <input type="number" name="price" placeholder="Precio" onChange={handleChange} />
-      <input type="number" name="max_assistance" placeholder="Capacidad" onChange={handleChange} />
-      <input name="id_event_location" placeholder="ID Ubicación" onChange={handleChange} />
-      <button type="submit">Crear Evento</button>
-    </form>
+  <input 
+    name="name" 
+    placeholder="Nombre" 
+    onChange={handleChange} 
+    className="eventForm__input" 
+  />
+  <textarea 
+    name="description" 
+    placeholder="Descripción" 
+    onChange={handleChange} 
+    className="eventForm__textarea" 
+  />
+  <input 
+    type="datetime-local" 
+    name="start_date" 
+    onChange={handleChange} 
+    className="eventForm__input" 
+  />
+  <input 
+    type="number" 
+    name="duration_in_minutes" 
+    placeholder="Duración" 
+    onChange={handleChange} 
+    className="eventForm__input" 
+  />
+  <input 
+    type="number" 
+    name="price" 
+    placeholder="Precio" 
+    onChange={handleChange} 
+    className="eventForm__input" 
+  />
+  <input 
+    type="number" 
+    name="max_assistance" 
+    placeholder="Capacidad" 
+    onChange={handleChange} 
+    className="eventForm__input" 
+  />
+  <input 
+    name="id_event_location" 
+    placeholder="ID Ubicación" 
+    onChange={handleChange} 
+    className="eventForm__input" 
+  />
+  <button type="submit" className="eventForm__button">Crear Evento</button>
+</form>
   );
 }
