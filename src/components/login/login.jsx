@@ -21,17 +21,13 @@ export default function Login({ onLoginSuccess }) {
       });
 
       const data = await response.json();
-
+      
       if (!response.ok) {
         throw new Error(data.message || 'Error al iniciar sesión');
       }
 
       localStorage.setItem('token', data.token);
-
-      // Verificamos si hay una ruta guardada para redirigir
-      const redirectPath = localStorage.getItem('redirectAfterLogin') || '/';
-      localStorage.removeItem('redirectAfterLogin'); // limpiamos
-
+       window.location.reload();
       onLoginSuccess?.();
       navigate(redirectPath, { replace: true });
     } catch (error) {
@@ -39,6 +35,7 @@ export default function Login({ onLoginSuccess }) {
     } finally {
       setLoading(false);
     }
+    
   };
 
   return (
