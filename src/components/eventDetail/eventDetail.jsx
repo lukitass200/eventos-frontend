@@ -15,7 +15,6 @@ export default function EventDetail() {
 
   // Obtener usuario y detalles evento al cargar o cambiar id
   useEffect(() => {
-    // Obtener el usuario actual desde el token
     apiFetch(`/user/me`)
       .then(user => {
         setCurrentUserId(user.id);
@@ -24,9 +23,8 @@ export default function EventDetail() {
         console.error("Error obteniendo usuario logueado:", err);
       });
 
-    // Traer detalle del evento
     apiFetch(`/event/${id}`)
-      .then(data => setEvent(data)) 
+      .then(data => setEvent(data))
       .catch(err => {
         console.error('Error al obtener evento:', err);
         setError('No se pudo cargar el evento.');
@@ -35,8 +33,8 @@ export default function EventDetail() {
 
   // Verificar inscripción solo si hay usuario logueado y evento cargado
   useEffect(() => {
-    if (!currentUserId) return; // Si no hay usuario, no verificamos
-    if (!id) return; // Si no hay id, no verificamos
+    if (!currentUserId) return;
+    if (!id) return;
 
     apiFetch(`/event/${id}/enrollment`, {
       headers: {
@@ -82,6 +80,12 @@ export default function EventDetail() {
       .finally(() => setLoadingEnroll(false));
   };
 
+  const handleLoginRedirect = () => {
+    // Guardamos la URL actual para volver después del login
+    localStorage.setItem('redirectAfterLogin', window.location.pathname);
+    navigate('/login');
+  };
+
   return (
     <div className="eventDetail">
       <h2>{event.name}</h2>
@@ -120,18 +124,28 @@ export default function EventDetail() {
       </div>
 
       <div className="actions">
-        {isOwner ? (
-          <button onClick={() => navigate(`/editEventForm/${id}`)}>Editar evento</button>
-        ) : isEnrolled ? (
-          <button onClick={handleUnenroll} disabled={loadingEnroll}>
-            {loadingEnroll ? 'Procesando...' : 'Darme de baja'}
-          </button>
+        {currentUserId ? (
+          isOwner ? (
+            <button className = 'detailButton' onClick={() => navigate(`/editEventForm/${id}`)}>Editar evento</button>
+          ) : isEnrolled ? (
+            <button className = 'detailButton' onClick={handleUnenroll} disabled={loadingEnroll}>
+              {loadingEnroll ? 'Procesando...' : 'Darme de baja'}
+            </button>
+          ) : (
+            <button
+              className="detailButton"
+              onClick={handleEnroll}
+              disabled={loadingEnroll || !event.enabled_for_enrollment}
+            >
+              {loadingEnroll ? 'Procesando...' : 'Inscribirme'}
+            </button>
+          )
         ) : (
           <button
-            onClick={handleEnroll}
-            disabled={loadingEnroll || !event.enabled_for_enrollment}
+            className="detailButton"
+            onClick={handleLoginRedirect}
           >
-            {loadingEnroll ? 'Procesando...' : 'Inscribirme'}
+            Inicia sesión para inscribirte
           </button>
         )}
       </div>

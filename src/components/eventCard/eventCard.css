@@ -1,28 +1,36 @@
 .EventCard {
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 13vw ;
+    height: 16.5vw;
+    background-color: rgb(245, 245, 245);
+    border-radius: 1vw;
+    box-shadow: 0 0.2vw 1vw rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    text-align: center;
+    font-family: sans-serif;
+    padding-bottom: 1vw;
+    transition: transform 0.2s;
+    margin: 0.5vw;
 }
+
 
 .EventCard:hover {
   transform: translateY(-4px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.6vw 1vw rgba(0, 0, 0, 0.1);
 }
 
 .EventCard h2 {
   margin-top: 0;
-  font-size: 1.4rem;
+  font-size: 1vw;
   color: #333;
-  margin-bottom: 0.5rem;
+  margin-top: 0.5vw;
 }
 
 .EventCard p {
-  margin: 0.3rem 0;
+  margin: 0.3vw 0;
   color: #555;
-  font-size: 1rem;
+  font-size: 0.8vw;
+  margin-left: 0.2vw;
+  margin-right: 0.2vw;
 }
 
 .EventCard p:last-child {
@@ -32,4 +40,5 @@
 .EventCardLink {
   text-decoration: none;
   color: inherit;
+  width: 13vw;
 }

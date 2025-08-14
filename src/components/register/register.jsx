@@ -40,12 +40,14 @@ export default function Register() {
 
   return (
     <div className="Register">
-      <h2>Registrarse</h2>
+      
       <form onSubmit={handleSubmit}>
+      <h2>Registrarse</h2>
         <input
           type="text"
           name="name"
           placeholder="Nombre"
+          className='inputR'
           value={formData.name}
           onChange={handleChange}
           required
@@ -54,6 +56,7 @@ export default function Register() {
           type="email"
           name="email"
           placeholder="Correo electrónico"
+          className='inputR'
           value={formData.email}
           onChange={handleChange}
           required
@@ -62,6 +65,7 @@ export default function Register() {
           type="password"
           name="password"
           placeholder="Contraseña"
+          className='inputR'
           value={formData.password}
           onChange={handleChange}
           required

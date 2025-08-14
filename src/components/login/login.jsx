@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { apiFetch } from './token';
 
@@ -6,6 +7,7 @@ export default function Login({ onLoginSuccess }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -25,8 +27,13 @@ export default function Login({ onLoginSuccess }) {
       }
 
       localStorage.setItem('token', data.token);
-       window.location.reload();
+
+      // Verificamos si hay una ruta guardada para redirigir
+      const redirectPath = localStorage.getItem('redirectAfterLogin') || '/';
+      localStorage.removeItem('redirectAfterLogin'); // limpiamos
+
       onLoginSuccess?.();
+      navigate(redirectPath, { replace: true });
     } catch (error) {
       alert(error.message);
     } finally {

@@ -109,7 +109,7 @@ export default function EditEventForm({ onUpdated }) {
 
         <label className="edit-event-form__label">
           Descripción:
-          <textarea
+          <input
             className="edit-event-form__textarea"
             name="description"
             value={formData.description}

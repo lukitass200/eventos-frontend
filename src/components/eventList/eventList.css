@@ -1,6 +1,6 @@
 .eventList {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(13vw, 1fr));
   gap: 1.5rem;
   padding: 2rem;
   background-color: #f8f9fa;
@@ -28,4 +28,25 @@
   text-align: center;
   font-style: italic;
   color: #666;
+}
+
+.ListButton{
+ width: 9vw;
+ height: 2vw;
+ border-radius: 0.6vw;
+ border: 0vw;
+ margin-top: 0.5vw;
+ margin-left: 0.5vw;
+}
+
+.ListButton:hover
+{
+  transform: translateY(-0.2vw);
+  box-shadow: 0 0.2vw 0.5vw rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.pagination{
+  display: flex;
+  justify-content: center;
 }

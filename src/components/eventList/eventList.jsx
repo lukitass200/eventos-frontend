@@ -37,6 +37,7 @@ export default function EventList() {
   if (error) return <p className="error">{error}</p>;
 
   return (
+    <div>
     <div className="eventList">
       {events.length > 0 ? (
         events.map(event => (
@@ -45,12 +46,12 @@ export default function EventList() {
       ) : (
         <p>No hay eventos disponibles</p>
       )}
-
+    </div>
       <div className="pagination">
-        <button onClick={handlePrevPage} disabled={offSet === 1}>
+        <button className = 'ListButton' onClick={handlePrevPage} disabled={offSet === 1}>
           &#8592; Anterior
         </button>
-        <button onClick={handleNextPage}>
+        <button className = 'ListButton' onClick={handleNextPage} >
           Siguiente &#8594;
         </button>
       </div>
