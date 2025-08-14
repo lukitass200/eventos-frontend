@@ -27,7 +27,11 @@ export default function Login({ onLoginSuccess }) {
       }
 
       localStorage.setItem('token', data.token);
-       window.location.reload();
+
+      // Obtener ruta guardada o home
+      const redirectPath = localStorage.getItem('redirectAfterLogin') || '/';
+      localStorage.removeItem('redirectAfterLogin');
+
       onLoginSuccess?.();
       navigate(redirectPath, { replace: true });
     } catch (error) {
@@ -35,7 +39,6 @@ export default function Login({ onLoginSuccess }) {
     } finally {
       setLoading(false);
     }
-    
   };
 
   return (
